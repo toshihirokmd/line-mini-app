@@ -1,6 +1,6 @@
 // あなたのLIFF IDとGASのWebアプリURLを設定
 const LIFF_ID = "2007069762-6gb5JYYz"; // 開発用LIFF ID
-const GAS_URL = "https://script.google.com/macros/s/AKfycby0rzwZlMhVUQ8oAbhfMl8ZcsIo7x0QHGczrBJcZKaAwczYUxuGfC2gq2ZJrYCC7F5Z/exec"; // GASをデプロイしたときのURL
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwtjvXvRfKKPM8lJGeerSTVO0DIpZjwKL41fQpAYWmSK9ijoAfG3Xc5XrDV9l2qcvYq/exec"; // GASをデプロイしたときのURL
 
 // LIFF初期化
 liff.init({
@@ -21,37 +21,33 @@ document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
     submitButton.disabled = true;
     submitButton.textContent = '送信中...';
     
-    // フォームデータの取得
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        category: document.getElementById('category').value,
-        message: document.getElementById('message').value
-    };
-
     try {
+        // フォームデータの取得
+        const formData = new URLSearchParams();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('category', document.getElementById('category').value);
+        formData.append('message', document.getElementById('message').value);
+
         // LINEユーザー情報の取得
         if (liff.isLoggedIn()) {
             const profile = await liff.getProfile();
-            formData.userId = profile.userId;
+            formData.append('userId', profile.userId);
         }
 
-        // GASにデータを送信（no-corsモードを使用）
+        // GASにデータを送信
         const response = await fetch(GAS_URL, {
             method: 'POST',
-            mode: 'no-cors', // CORSエラーを回避
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify(formData)
+            body: formData.toString()
         });
 
-        // no-corsモードではresponse.jsonが使えないため、成功とみなす
-        console.log('Response received');
+        console.log('送信完了');
         alert('お問い合わせを受け付けました。');
         e.target.reset();
         
-        // LIFFブラウザを閉じる
         if (liff.isInClient()) {
             liff.closeWindow();
         }
@@ -60,7 +56,6 @@ document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
         console.error('Error details:', error);
         alert('エラーが発生しました: ' + error.message);
     } finally {
-        // ボタンを元に戻す
         submitButton.disabled = false;
         submitButton.textContent = originalButtonText;
     }

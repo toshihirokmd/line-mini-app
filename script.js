@@ -1,6 +1,6 @@
 // あなたのLIFF IDとGASのWebアプリURLを設定
 const LIFF_ID = "2007069762-6gb5JYYz"; // 開発用LIFF ID
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxSZzSnhe3Blbk77F9ITcL_ubq-Y7YOYN7voZJdSnErD4M_NAYTePCkWrQC0x9RTpUs/exec"; // GASをデプロイしたときのURL
+const GAS_URL = "https://script.google.com/macros/s/AKfycbx3Wt4Guhz7TjEBHOiqulY9GEpXeBvrM52n_Hl9m-3s6RcZw9qU4pRSveUph6dHarbn/exec"; // GASをデプロイしたときのURL
 
 // LIFF初期化
 liff.init({

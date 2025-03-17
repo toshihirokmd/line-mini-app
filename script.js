@@ -28,7 +28,7 @@ async function handleFormSubmit(event) {
         const profile = await liff.getProfile();
         const userId = profile.userId;
         
-        const response = await fetch('あなたのGASのWebアプリURL', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzDh0Y48jmm88_9dQAHRfwi-cghxV1aU0hRdEP1IOLPCrmng031Cqo7xFXieLfjCO6M/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

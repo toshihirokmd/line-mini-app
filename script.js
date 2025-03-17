@@ -1,6 +1,6 @@
 // あなたのLIFF IDとGASのWebアプリURLを設定
 const LIFF_ID = "2007069764-dVrNbbq"; // LINE DevelopersコンソールからコピーしたLIFF ID
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyQExbSiuAxY3mfBkraAF8xk2N1e5X4_oU36G2YiigmJZZIz1E-EFI17aw9gXyl0K48/exec"; // GASをデプロイしたときのURL
+const GAS_URL = "https://script.google.com/macros/s/AKfycbzI0BdCkd44hW8FY7kbm1_rp0UrwAenvL4hezWnUNzANd_1jEhRDU8DBKDcZg7JwOiW/exec"; // GASをデプロイしたときのURL
 
 // LIFF初期化
 liff.init({
@@ -46,7 +46,8 @@ document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
         });
 
         const result = await response.json();
-        
+        console.log('Response:', result); // デバッグ用
+
         if (result.status === 'success') {
             alert('お問い合わせを受け付けました。');
             e.target.reset();
@@ -59,8 +60,8 @@ document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
             throw new Error(result.message || '送信に失敗しました');
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('エラーが発生しました。もう一度お試しください。');
+        console.error('Error details:', error); // デバッグ用
+        alert('エラーが発生しました: ' + error.message);
     } finally {
         // ボタンを元に戻す
         submitButton.disabled = false;
